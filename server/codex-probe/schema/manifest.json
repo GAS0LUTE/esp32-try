@@ -1,0 +1,12 @@
+{
+  "binary": "codex",
+  "binaryVersion": "codex-cli 0.147.0",
+  "schemas": {
+    "ClientRequest.json": "6ba8920b1eb51583d43829d73a353bb069a888d08ed763a44272440c14efc88f",
+    "ServerRequest.json": "e5ae9078cddac333262ae392fe25558d6054b77e4beb00784b77cf606849d063",
+    "ServerNotification.json": "558aab11da20cd0d278ec6f9067a46444f0566be7e3953f443dcc5d7cb23736f",
+    "v1/InitializeParams.json": "6f0094be9a65242ec779a40794cbd4fdfa32fca1e45084a16adfb50501d33ea2"
+  },
+  "generatedAt": "2026-10-19T18:09:57+08:00",
+  "note": "由 app-server generate-json-schema 生成，勿手工修改"
+}

@@ -1,0 +1,12 @@
+{
+  "binary": "/Applications/ChatGPT.app/Contents/Resources/codex-cli/CodexCLI.app/Contents/MacOS/codex",
+  "binaryVersion": "codex-cli 0.163.0-alpha.10.2",
+  "schemas": {
+    "ClientRequest.json": "6b10888f163f569922d42c41e94a98b4261258abc7581c14eca867c3b125dc6f",
+    "ServerRequest.json": "f339be472737a0003efa25fba2e6e6c9237e621cd065b6d6995c51256e9dc1fb",
+    "ServerNotification.json": "8e719512bc26bb3871fcf7b378b79abf912d82787609c0ad418b71f179d0883f",
+    "v1/InitializeParams.json": "b55124e7c0f36a1789396daa5578217a92be67f053903696236686e59f6f212e"
+  },
+  "generatedAt": "2026-10-19T18:09:57+08:00",
+  "note": "由 app-server generate-json-schema 生成，勿手工修改"
+}

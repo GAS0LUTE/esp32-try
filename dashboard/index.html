@@ -19,17 +19,15 @@
   .section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
   .section h2{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
   .section h2::before{content:"";width:4px;height:16px;background:var(--blue);border-radius:2px;display:inline-block}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
   .kpi{background:var(--bluebg);border-radius:8px;padding:12px 14px}
   .kpi .v{font-size:18px;font-weight:700}
   .kpi .k{font-size:12px;color:var(--sub)}
-  /* 状态条 */
   .banner{display:flex;flex-wrap:wrap;gap:10px}
   .pill{font-size:13px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:#fff}
   .pill b{font-weight:700}
   .pill.block{color:var(--red);border-color:#f3c2bd;background:#fdecea}
   .pill.wait{color:var(--warn);border-color:#f5d9a8;background:#fef6e7}
-  /* 表格 */
   table{width:100%;border-collapse:collapse;font-size:13px}
   th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
   th{color:var(--sub);font-weight:600;background:#fafbfc}
@@ -40,7 +38,6 @@
   .s-待审查{background:#eef3ff;color:var(--blue)}
   .s-进行中{background:#e7f6ee;color:var(--green)}
   .s-待领取{background:#fff5e6;color:var(--warn)}
-  .s-待明确{background:#fff5e6;color:var(--warn)}
   .s-阻塞{background:#fdecea;color:var(--red)}
   .s-暂停{background:#f0f1f3;color:var(--gray)}
   .s-已验收{background:#e7f6ee;color:var(--green)}
@@ -49,15 +46,38 @@
   .note{font-size:12px;color:var(--sub);margin-top:8px}
   footer{color:var(--gray);font-size:12px;text-align:center;padding:10px 0 20px}
   .disc{font-size:12px;color:var(--warn);background:#fef6e7;border:1px solid #f5d9a8;border-radius:8px;padding:10px 12px;margin-bottom:16px}
+  .badge{display:inline-block;font-size:10px;padding:1px 5px;border-radius:4px;background:#f0f1f3;color:var(--gray);
+    margin-left:5px;font-weight:600;vertical-align:middle;border:1px solid var(--line)}
+  a.localink{color:var(--sub)}
+  .stage{background:#eef3ff;border:1px solid #c7d7ff;border-radius:10px;padding:14px 16px;margin-bottom:16px}
+  .stage a{font-weight:700;font-size:15px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:760px){.two{grid-template-columns:1fr}}
+  .box{background:#fafbfc;border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+  .box h3{font-size:13px;margin-bottom:8px;color:var(--ink)}
+  .box ul{padding-left:18px;font-size:12.5px;color:var(--ink)}
+  .box li{margin-bottom:4px}
+  code{background:#f0f1f3;padding:1px 5px;border-radius:4px;font-size:12px}
 </style>
 </head>
 <body>
 <header>
   <h1>GPT 方块 · 协作看板</h1>
-  <div class="meta" id="meta">数据来源：任务与验收台账.md · 快照时间：— · 本页由 HY 生成，非自动同步</div>
+  <div class="meta">
+    数据来源：<span id="src"></span> · 数据快照时间：<b id="snap"></b> · 本页生成时间：<b id="gen"></b>
+  </div>
 </header>
 
-<div class="disc">本页是 HY 按台账手工生成的静态快照，<b>不代表已自动同步</b>。每当台账或产物更新，HY 重新生成此页并随 Git 提交。请以 <a href="../任务与验收台账.md">任务与验收台账.md</a> 为权威来源。</div>
+<div class="disc">
+  本页是 HY 按台账手工生成的<b>静态快照</b>。<b>Git 同步仅在用户明确说“同步”后执行</b>；本页由 Codex 提出阶段任务后制作，并随该次同步更新，不代表自动同步。
+  权威来源是 <span id="src2"></span>（该文件<b>仅本地可用</b>）。
+</div>
+
+<div class="stage">
+  📌 <b>阶段汇报（本地接入验证小阶段）</b><br>
+  <a href="INT-001-阶段汇报.html">INT-001-阶段汇报.html · 电脑接入验证（本地模拟范围）</a>
+  <div class="dep">主套件 74 PASS / 0 FAIL / 2 UNVERIFIED；专项复现 6 PASS / 0 FAIL。<b>INT-001 整体仍为阻塞</b>，本汇报不代表整体已验收。</div>
+</div>
 
 <div class="section">
   <h2>当前总览</h2>
@@ -66,11 +86,35 @@
 </div>
 
 <div class="section">
+  <h2>最新交付</h2>
+  <div id="latest" style="font-size:13px"></div>
+</div>
+
+<div class="section">
+  <h2>Git 与同步状态</h2>
+  <table>
+    <thead><tr><th>项目</th><th>结果 / 证据</th></tr></thead>
+    <tbody id="git"></tbody>
+  </table>
+  <div class="note">同步规则：仅当用户明确说“同步”后，HY 串行提交并推送；无变更不制造空提交。</div>
+</div>
+
+<div class="section">
   <h2>任务卡</h2>
   <table>
     <thead><tr><th>编号</th><th>任务</th><th>负责人</th><th>状态</th><th>前置/依赖</th><th>产物 / 证据</th><th>更新</th></tr></thead>
     <tbody id="tasks"></tbody>
   </table>
+  <div class="note">带 <span class="badge">仅本地</span> 的条目已被 .gitignore 排除，<b>不在公开仓库中</b>；链接仅在本地打开时有效。</div>
+</div>
+
+<div class="section">
+  <h2>验收维度（文档 / 构建 / 实机）</h2>
+  <table>
+    <thead><tr><th>维度</th><th>覆盖任务</th><th>验收结果</th><th>说明</th></tr></thead>
+    <tbody id="dims"></tbody>
+  </table>
+  <div class="note">数字由任务状态计算，与下方任务卡明细一致；实机未测不折算为完成比例，全站不显示虚构完成百分比。</div>
 </div>
 
 <div class="section">
@@ -79,129 +123,226 @@
     <thead><tr><th>阶段</th><th>负责人</th><th>工作与产物</th><th>放行条件</th><th>实际验收</th></tr></thead>
     <tbody id="milestones"></tbody>
   </table>
-  <div class="note">实际验收列全部为「未测 / 待确认」，因为尚无实机验证，且硬件未到货（DS 2026-10-19 回执确认）。</div>
 </div>
 
 <div class="section">
-  <h2>验收指标（目标待协商，全部未测）</h2>
-  <table>
-    <thead><tr><th>指标</th><th>测量方式</th><th>当前状态</th></tr></thead>
-    <tbody id="metrics"></tbody>
-  </table>
+  <h2>交付链接与范围检查</h2>
+  <div class="two">
+    <div class="box">
+      <h3>公开（随 Git 同步到 GitHub）</h3>
+      <ul id="pub"></ul>
+    </div>
+    <div class="box">
+      <h3>仅本地可用（已被 .gitignore 排除）</h3>
+      <ul id="loc"></ul>
+    </div>
+  </div>
+  <div class="note">检查方式：比对 .gitignore 与实际文件；本页中所有本地专有证据均标“仅本地”。<br>
+  <b>设计目录逐项区分</b>：不因目录未忽略就全部公开。当前 <code>设计/</code> 下 2 个文件均为协作任务卡（派工与验收要求），按同步约定留在本地；后续若出现产品设计文档，逐项确认后再决定是否同步。</div>
 </div>
 
 <div class="section">
-  <h2>未决项</h2>
-  <ul id="open" style="padding-left:18px;font-size:13px;color:var(--ink)"></ul>
+  <h2>阻塞与未决项</h2>
+  <ul id="open" style="padding-left:18px;font-size:13px"></ul>
 </div>
 
-<footer>HY（经 WorkBuddy 调用）· 仅做可视化与进度记录，不写固件、不做设计决策 · 最后生成：<span id="gen"></span></footer>
+<footer>
+  HY（经 WorkBuddy 调用）· 仅做可视化与进度记录，不写固件、不做设计决策 ·
+  本页生成时间：<b id="gen2"></b>（固定值，不随打开时间变化） · 数据快照：<b id="snap2"></b>
+</footer>
 
 <script>
-// ===== HY 嵌入快照数据（更新时整体替换本对象并重新生成）=====
-const DATA = {
-  snapshot: "2026-10-19",
+// ===== 固定生成时间（V02：不随打开时间变化）=====
+var GENERATED = "2026-10-19 19:32 CST";
+
+// ===== HY 嵌入快照数据 =====
+var DATA = {
+  snapshot: "2026-10-19 19:01",
   phase: "协作框架建立 / 总体设计草案",
-  next: "RES-001 需返工（Codex 审查 R01–R06 未关闭），等待 Kimi 修订回执；DES-001 待用户与 Codex 确认首版需求；DES-002 阻塞于 RES-001 与 DES-001。",
+  next: "Codex 与用户确定首版会话入口（是否采用连接程序管理的专用工作会话），随后制定真实集成与电脑语音闭环设计；Kimi 处理 RES-001 的 K2-01–03。",
   blockers: [
-    "DES-002 阻塞于 RES-001（需返工，R01–R06 未关闭）与 DES-001（需求待明确）",
-    "DEV-001 阻塞于 DES-002 未批准",
+    "INT-001 阻塞：R01、R02 本地模拟已验收，整体等待会话接入方案确认",
+    "DEV-001 阻塞于 DES-002 未批准（固件构建未开始）",
+    "RES-001 需返工：K2-01–03 待 Kimi 处理",
     "电池路线 PWR-001 暂停，未通过安全放行"
   ],
-  waiting: "Kimi 修订 RES-001（R01–R06）；用户 / Codex 确认首版需求（DES-001）",
-  latest: "Codex 已审查 RES-001，结论需返工（审查/RES-001-Codex审查-2026-10-19.md，R01–R06 未关闭，等待 Kimi 修订）；DEC-007 主板已下单（微雪 ESP32-S3-LCD-1.47B-M），实机未验证；Kimi 交付 research/ 两份文档与回执、DS 提交现状回执（未开始 DEV-001）。",
+  waiting: "用户确认首版会话入口；Kimi 修订 RES-001（K2-01–03）；Codex 复验 HY 的 VIS-001 修订与 VIS-002 汇报",
+  latest: "INT-001：R01、R02 本地模拟已由 Codex 验收（主套件 74 PASS / 0 FAIL / 2 UNVERIFIED；专项复现 6 PASS / 0 FAIL），DS 交付 server/codex-probe 与 tests/codex-probe；Codex 复验 RES-001 结论为需返工（K2-01–03 交 Kimi）；主板已下单（微雪 ESP32-S3-LCD-1.47B-M），到货情况待确认；语音唤醒、播放中语音打断、主动播报由用户后续决定；HY 本轮交付 VIS-002 阶段汇报，并完成 VIS-001 的 V01–V05 修订。",
+  git: [
+    {k:"本地 HEAD", v:"e991cde", d:"2026-10-19 提交，含 .gitignore、README.md、dashboard/index.html、dashboard/使用说明.md、项目设计大纲.md"},
+    {k:"远程引用 origin/main（普通文本，非链接）", v:"e991cde", d:"本地远程跟踪引用与本地 HEAD 一致（上次 fetch 后的本地记录；本轮未访问远程服务器，不作远程服务器核验结论）"},
+    {k:"同步规则", v:"用户明确说“同步”后执行", d:"已按用户指令同步过一次；当前有未提交改动，未收到新的同步授权"},
+    {k:"公开仓库", v:"github.com/GAS0LUTE/esp32-try", d:"仅白名单内容；协作内容与个人资料已排除"}
+  ],
   tasks: [
-    {id:"GOV-001",name:"建立规则、大纲、台账",owner:"Codex",status:"待审查",dep:"文件已创建；待用户审阅整体设计",art:"AGENTS.md / 项目设计大纲.md / 任务与验收台账.md",upd:"2026-10-19"},
-    {id:"RES-001",name:"调研成熟 ESP32 AI 硬件案例",owner:"Kimi / WorkBuddy",status:"需返工",dep:"首轮已审查见 R01–R06，等待 Kimi 修订回执",art:"research/案例对比.md · research/推荐路线.md · 审查/RES-001-Codex审查-2026-10-19.md",ev:"交付报告/Kimi-回执-RES-001-2026-10-19.md",upd:"2026-10-19"},
-    {id:"GIT-001",name:"初始化本地 Git 与首次基线提交",owner:"HY / WorkBuddy",status:"待审查",dep:"检查仓库边界、忽略规则与提交身份",art:"本仓库 + .gitignore",ev:"本地基线提交 bb2cc12（待用户“同步”指令后推送）",upd:"2026-10-19"},
-    {id:"VIS-001",name:"建立本地可视化看板",owner:"HY / WorkBuddy",status:"待审查",dep:"使用当前台账，不虚构进度",art:"dashboard/index.html · dashboard/使用说明.md",ev:"本页",upd:"2026-10-19"},
-    {id:"DES-001",name:"与用户收敛首版需求",owner:"Codex",status:"待明确",dep:"用户场景、硬件现状与预算",art:"—",upd:"2026-10-19"},
-    {id:"DES-002",name:"选定技术基线和接口设计",owner:"Codex",status:"阻塞",dep:"RES-001、DES-001",art:"—",upd:"2026-10-19"},
+    {id:"GOV-001",name:"建立规则、大纲、台账",owner:"Codex",status:"待审查",dep:"文件已创建；待用户审阅整体设计",art:"AGENTS.md · 项目设计大纲.md · 任务与验收台账.md",upd:"2026-10-19"},
+    {id:"RES-001",name:"调研成熟 ESP32 AI 硬件案例",owner:"Kimi / WorkBuddy",status:"需返工",dep:"v2 与补充核查已复验；处理 K2-01–03",art:"research/案例对比.md · research/推荐路线.md · research/计划预审-AppServer核对-K3-2026-10-19.md",ev:"交付报告/Kimi-回执-K3-2026-10-19.md · 审查/成果复验-2026-10-19.md",upd:"2026-10-19"},
+    {id:"GIT-001",name:"初始化本地 Git 与首次基线提交",owner:"HY / WorkBuddy",status:"待审查",dep:"仓库已建立；已提供本地/远程核对证据",art:".gitignore · 本仓库",ev:"本地 HEAD e991cde = 远程 origin/main e991cde（已核对）",upd:"2026-10-19"},
+    {id:"VIS-001",name:"建立本地可视化看板",owner:"HY / WorkBuddy",status:"待审查",dep:"已按 V01–V05 与 H01–H05 修订；截图已补交，待 Codex 复验",art:"dashboard/index.html · dashboard/使用说明.md",ev:"本页 · 交付报告/HY-VIS-002.md · 审查/HY-当前验收.md",upd:"2026-10-19"},
+    {id:"VIS-002",name:"本地接入验证阶段汇报",owner:"HY / WorkBuddy",status:"待审查",dep:"任务卡 设计/VIS-002-接入验证阶段汇报.md；已按 H01/H02/H05 修订并补交截图，待 Codex 复验",art:"dashboard/INT-001-阶段汇报.html",ev:"交付报告/HY-VIS-002.md · 审查/HY-当前验收.md",upd:"2026-10-19"},
+    {id:"DES-001",name:"与用户收敛首版需求",owner:"Codex",status:"进行中",dep:"已确认按键语音与 Codex 交互、查询待确认事项；预算待补充",art:"—",upd:"2026-10-19"},
+    {id:"DES-002",name:"选定技术基线和接口设计",owner:"Codex",status:"进行中",dep:"总体计划草案已落盘；细化电脑会话接入验证与硬件设计",art:"—",upd:"2026-10-19"},
+    {id:"INT-001",name:"电脑端 Codex 会话接入验证",owner:"DS；Codex 设计验收",status:"阻塞",dep:"R01、R02 本地模拟已验收；整体等待会话接入方案确认",art:"server/codex-probe/ · tests/codex-probe/",ev:"交付报告/DS-INT-001.md · 审查/INT-001-当前验收.md",upd:"2026-10-19"},
     {id:"DEV-001",name:"建立可复现的最小固件构建",owner:"DS",status:"阻塞",dep:"DES-002 批准",art:"—",upd:"2026-10-19"},
     {id:"PWR-001",name:"电池方案核验与整机供电审查",owner:"Codex 设计监督",status:"暂停",dep:"用户恢复此阶段",art:"—",upd:"2026-10-19"}
   ],
   milestones: [
-    {s:"A 需求收敛",o:"Codex + 用户",w:"首版范围、体验流程、预算边界、硬件现状",c:"关键需求明确，未决项有记录",r:"未测 / 待确认"},
-    {s:"B 案例调研",o:"Kimi",w:"案例对比、复用清单、许可证、技术风险",c:"Codex 可追溯来源并完成路线比较",r:"需返工（Codex 首轮审查 R01–R06 未关闭，等待 Kimi 修订）"},
-    {s:"C 总体设计",o:"Codex",w:"选定基线、架构、引脚/供电审查、接口约定、验收目标",c:"用户确认重要取舍；实现任务条件齐备",r:"未测 / 待确认"},
-    {s:"D 最小构建",o:"DS",w:"固定版本、构建说明、配置模板、可复现日志",c:"Codex 核对可构建；实机未测单独标明",r:"未测 / 待确认"},
-    {s:"E USB 硬件验证",o:"DS + 用户",w:"屏幕、输入、录音、播放分项测试与证据",c:"分项通过；不跳过供电和引脚核对",r:"未测 / 待确认（硬件未到货）"},
+    {s:"A 需求收敛",o:"Codex + 用户",w:"首版范围、体验流程、预算边界、硬件现状",c:"关键需求明确，未决项有记录",r:"进行中"},
+    {s:"B 案例调研",o:"Kimi",w:"案例对比、复用清单、许可证、技术风险",c:"Codex 可追溯来源并完成路线比较",r:"需返工（K2-01–03 待 Kimi 处理）"},
+    {s:"B2 电脑接入本地模拟验证",o:"DS（Codex 验收）",w:"server/codex-probe、tests/codex-probe、R01/R02 本地模拟",c:"模拟套件与专项复现通过，证据可追溯",r:"已验收（仅本地模拟范围；INT-001 整体仍阻塞）"},
+    {s:"C 总体设计",o:"Codex",w:"选定基线、架构、引脚/供电审查、接口约定、验收目标",c:"用户确认重要取舍；实现任务条件齐备",r:"进行中"},
+    {s:"D 最小构建",o:"DS",w:"固定版本、构建说明、配置模板、可复现日志",c:"Codex 核对可构建；实机未测单独标明",r:"未开始（阻塞于 DES-002）"},
+    {s:"E USB 硬件验证",o:"DS + 用户",w:"屏幕、输入、录音、播放分项测试与证据",c:"分项通过；不跳过供电和引脚核对",r:"未测 / 待确认（主板已下单，到货情况待确认）"},
     {s:"F 对话集成",o:"DS",w:"单轮对话、状态 UI、失败恢复",c:"依据测试清单通过，日志与体验一致",r:"未测 / 待确认"},
-    {s:"G 体验优化",o:"DS，Codex 验收",w:"唤醒、打断、音频效果、稳定性优化",c:"分别提交实测，不以主观代替",r:"未测 / 待确认"},
+    {s:"G 体验优化",o:"DS，Codex 验收",w:"音频效果、稳定性优化；语音唤醒与播放中语音打断待用户决定是否纳入",c:"分别提交实测，不以主观代替",r:"后续待用户决定（唤醒 / 打断未作为已批准开发项）"},
     {s:"H 电池与结构",o:"暂停；恢复后 Codex 设计审查、DS 适配、用户实测",w:"电源方案、实物尺寸、结构图、测试记录",c:"安全证据及实测齐备后才能装入外壳",r:"暂停"},
     {s:"I 交付",o:"全员，Codex 汇报",w:"固件版本、装配说明、已知问题、恢复流程",c:"用户可按文档复现和维护",r:"未测 / 待确认"}
   ],
-  metrics: [
-    {m:"开机到可交互时间",how:"日志时间戳 + 实物观察",st:"目标待协商，未测"},
-    {m:"对话首段响应延迟",how:"录音结束到首次播放的时间差",st:"目标待协商，未测"},
-    {m:"连续对话成功率",how:"固定测试脚本，记录成功/总次数和错误分类",st:"场景待定，未测"},
-    {m:"唤醒与误触发",how:"明确距离、环境声、样本数",st:"首版必要性待定"},
-    {m:"运行稳定性",how:"明确时长和负载，记录重启/内存/错误",st:"目标待定，未测"},
-    {m:"供电与温升",how:"指定测点、仪器、环境、充放电状态",st:"电池相关暂停"}
-  ],
+  scope: {
+    pub: [
+      "README.md、项目设计大纲.md、.gitignore",
+      "dashboard/index.html、使用说明.md、INT-001-阶段汇报.html",
+      "server/codex-probe/**（DS 代码）",
+      "tests/codex-probe/**（DS 测试，logs/ 除外）"
+    ],
+    loc: [
+      "AGENTS.md、任务与验收台账.md",
+      "research/**、交付报告/**、审查/**",
+      "设计/ 中的协作任务卡：INT-001-电脑接入验证任务.md、VIS-002-接入验证阶段汇报.md（逐项区分后留本地）",
+      "tests/**/logs/**（原始日志含本机绝对路径，已排除）",
+      ".workbuddy/（个人记忆与本地配置）",
+      "密钥、录音、构建产物"
+    ]
+  },
   open: [
-    "首版体验优先级、硬件到货情况（主板已下单，DEC-007）、预算与服务费用边界",
+    "首版会话入口：是否以连接程序管理的专用工作会话作为入口，待用户确认；共享持久化历史不等于共享实时执行",
+    "桌面接入：已测入口未建立同一会话实时双向能力；其他接入方式尚未证明；独立实例可用于技术验证",
+    "服务器侧真实中途断线、待办恢复、上游消息幂等、同一线程并发均未验证；保持不自动重发策略",
+    "文件审批真实接口、语音输入/播报、账号用量未验证",
+    "主板已下单（微雪 ESP32-S3-LCD-1.47B-M），到货情况待确认；外接音频模块待确认；预算与服务费用边界",
+    "语音唤醒、播放中语音打断、主动播报：后续由用户决定，未作为已批准开发项",
     "上游工程、依赖版本、服务端路线与适配成本",
     "具体接线、音频供电余量、正式验收阈值",
     "电池安全及整机供电放行：暂停，未通过"
   ]
 };
 
-// ===== 渲染 =====
-function fmt(s){return s.replace(/</g,"&lt;").replace(/>/g,"&gt;");}
-document.getElementById("meta").innerHTML =
-  '数据来源：<a href="../任务与验收台账.md">任务与验收台账.md</a> · 快照时间：'+DATA.snapshot+
-  ' · 本页由 HY 生成，非自动同步';
-document.getElementById("gen").textContent = new Date().toLocaleString("zh-CN");
+// ===== 工具 =====
+function fmt(s){return String(s).replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+var LOCAL_RE = [/^research\//, /^交付报告\//, /^审查\//, /^设计\//, /^AGENTS\.md/, /^任务与验收台账\.md/, /logs\//];
+function isLocal(p){return LOCAL_RE.some(function(re){return re.test(String(p).trim());});}
+// H04：仅“已核对存在的路径”才渲染为链接，其余（含 origin/main 这类普通引用）一律纯文本，避免产生 ../origin/ 之类死链
+var KNOWN = [
+  "AGENTS.md","任务与验收台账.md","项目设计大纲.md","README.md",".gitignore",
+  "research/案例对比.md","research/推荐路线.md","research/计划预审-AppServer核对-K3-2026-10-19.md",
+  "交付报告/Kimi-回执-K3-2026-10-19.md","交付报告/DS-INT-001.md","交付报告/HY-VIS-002.md",
+  "审查/成果复验-2026-10-19.md","审查/INT-001-当前验收.md","审查/HY-当前验收.md",
+  "设计/INT-001-电脑接入验证任务.md","设计/VIS-002-接入验证阶段汇报.md",
+  "dashboard/index.html","dashboard/使用说明.md","dashboard/INT-001-阶段汇报.html",
+  "server/codex-probe/","tests/codex-probe/"
+];
+function linkify(t){
+  t = String(t).trim(); if(!t) return "";
+  var m = t.match(/[A-Za-z0-9一-龥_\-\.\/]+\.(md|html|json|jsonl|mjs|js)|[A-Za-z0-9一-龥_\-\.\/]+\//);
+  if(!m) return fmt(t);
+  var path = m[0];
+  if(KNOWN.indexOf(path) < 0) return fmt(t); // 未核对存在的路径 → 纯文本（H04）
+  var loc = isLocal(path);
+  return '<a class="'+(loc?"localink":"")+'" href="../'+path+'">'+fmt(t)+'</a>'+(loc?'<span class="badge">仅本地</span>':'');
+}
+function items(s){
+  if(!s || s==="—") return "—";
+  return s.split("·").map(linkify).filter(function(x){return x;}).join(" · ");
+}
+function tag(st){return '<span class="tag s-'+st+'">'+fmt(st)+'</span>';}
+function msTag(r){
+  var s = "暂停";
+  if(r.indexOf("已验收")>=0) s="已验收";
+  else if(r.indexOf("需返工")>=0) s="需返工";
+  else if(r.indexOf("进行中")>=0) s="进行中";
+  else if(r.indexOf("未开始")>=0) s="阻塞";
+  return '<span class="tag s-'+s+'">'+fmt(r)+'</span>';
+}
+function cnt(arr,st){return arr.filter(function(t){return t.status===st;}).length;}
 
-// KPI
-const total = DATA.tasks.length;
-const done = DATA.tasks.filter(t=>t.status==="已验收").length;
-const blocked = DATA.tasks.filter(t=>t.status==="阻塞"||t.status==="暂停").length;
-const active = DATA.tasks.filter(t=>["进行中","待审查","待领取","待明确"].includes(t.status)).length;
-const kpi = [
+// ===== 头部与时间（V02）=====
+document.getElementById("gen").textContent = GENERATED;
+document.getElementById("gen2").textContent = GENERATED;
+document.getElementById("snap").textContent = DATA.snapshot;
+document.getElementById("snap2").textContent = DATA.snapshot;
+document.getElementById("src").innerHTML = linkify("任务与验收台账.md");
+document.getElementById("src2").innerHTML = linkify("任务与验收台账.md");
+
+// ===== KPI（V05：覆盖所有状态，含需返工）=====
+var T = DATA.tasks, total = T.length;
+var cDone = cnt(T,"已验收"), cRe = cnt(T,"需返工");
+var cBlock = cnt(T,"阻塞"), cPause = cnt(T,"暂停");
+var cActive = cnt(T,"进行中") + cnt(T,"待审查") + cnt(T,"待领取");
+var kpi = [
   {v:DATA.phase, k:"当前阶段"},
   {v:total+" 项", k:"任务总数"},
-  {v:active+" 项", k:"进行/待处理"},
-  {v:blocked+" 项", k:"阻塞/暂停"},
-  {v:done+" / "+total, k:"已验收（口径：任务状态=已验收）"}
+  {v:cActive+" 项", k:"进行 / 待审查"},
+  {v:cRe+" 项", k:"需返工"},
+  {v:(cBlock+cPause)+" 项", k:"阻塞 / 暂停"},
+  {v:cDone+" / "+total, k:"已验收（状态=已验收）"}
 ];
-document.getElementById("kpi").innerHTML = kpi.map(x=>
-  '<div class="kpi"><div class="v">'+fmt(x.v)+'</div><div class="k">'+fmt(x.k)+'</div></div>').join("");
-
-// Banner
-let b = '<span class="pill"><b>下一步：</b>'+fmt(DATA.next)+'</span>';
-b += '<span class="pill wait"><b>等待：</b>'+fmt(DATA.waiting)+'</span>';
-DATA.blockers.forEach(x=> b += '<span class="pill block"><b>阻塞：</b>'+fmt(x)+'</span>');
-document.getElementById("banner").innerHTML = b;
-
-// Tasks
-document.getElementById("tasks").innerHTML = DATA.tasks.map(t=>{
-  const art = (t.art&&t.art!=="—") ? t.art.split("·").map(s=>{
-    const p=s.trim(); if(!p) return "";
-    // 仅对已知相对路径做链接
-    const m=p.match(/(research\/[^ ]+|交付报告\/[^ ]+|审查\/[^ ]+)/);
-    return m ? '<a href="../'+m[1]+'">'+fmt(p)+'</a>' : fmt(p);
-  }).join(" · ") : "—";
-  const ev = t.ev ? (/(^|\/)(research|交付报告|审查)\//.test(t.ev) ? '<br><span class="dep">证据：<a href="../'+t.ev.trim().split(/\s+/)[0]+'">'+fmt(t.ev)+'</a></span>' : '<br><span class="dep">证据：'+fmt(t.ev)+'</span>') : "";
-  return '<tr><td><b>'+fmt(t.id)+'</b></td><td>'+fmt(t.name)+'</td><td>'+fmt(t.owner)+
-    '</td><td><span class="tag s-'+t.status+'">'+fmt(t.status)+'</span></td>'+
-    '<td class="dep">'+fmt(t.dep)+'</td><td>'+art+ev+'</td><td class="dep">'+fmt(t.upd)+'</td></tr>';
+document.getElementById("kpi").innerHTML = kpi.map(function(x){
+  return '<div class="kpi"><div class="v">'+fmt(x.v)+'</div><div class="k">'+fmt(x.k)+'</div></div>';
 }).join("");
 
-// Milestones
-document.getElementById("milestones").innerHTML = DATA.milestones.map(m=>
-  '<tr><td><b>'+fmt(m.s)+'</b></td><td>'+fmt(m.o)+'</td><td>'+fmt(m.w)+
-  '</td><td class="dep">'+fmt(m.c)+'</td><td><span class="tag s-'+(m.r.indexOf("进行中")>=0?"进行中":(m.r.indexOf("需返工")>=0?"需返工":"暂停"))+'">'+fmt(m.r)+'</span></td></tr>'
-).join("");
+// ===== Banner =====
+var b = '<span class="pill"><b>下一步：</b>'+fmt(DATA.next)+'</span>';
+b += '<span class="pill wait"><b>等待：</b>'+fmt(DATA.waiting)+'</span>';
+DATA.blockers.forEach(function(x){ b += '<span class="pill block"><b>阻塞：</b>'+fmt(x)+'</span>'; });
+document.getElementById("banner").innerHTML = b;
 
-// Metrics
-document.getElementById("metrics").innerHTML = DATA.metrics.map(x=>
-  '<tr><td>'+fmt(x.m)+'</td><td class="dep">'+fmt(x.how)+'</td><td><span class="tag s-暂停">'+fmt(x.st)+'</span></td></tr>'
-).join("");
+// ===== 最新交付 =====
+document.getElementById("latest").innerHTML = fmt(DATA.latest);
 
-// Open
-document.getElementById("open").innerHTML = DATA.open.map(x=>'<li>'+fmt(x)+'</li>').join("");
+// ===== Git 状态（V03）=====
+document.getElementById("git").innerHTML = DATA.git.map(function(g){
+  return '<tr><td><b>'+fmt(g.k)+'</b></td><td>'+fmt(g.v)+'<br><span class="dep">'+fmt(g.d)+'</span></td></tr>';
+}).join("");
+
+// ===== 任务卡 =====
+document.getElementById("tasks").innerHTML = T.map(function(t){
+  var art = items(t.art);
+  var ev = t.ev ? '<br><span class="dep">证据：'+items(t.ev)+'</span>' : "";
+  return '<tr><td><b>'+fmt(t.id)+'</b></td><td>'+fmt(t.name)+'</td><td>'+fmt(t.owner)+
+    '</td><td>'+tag(t.status)+'</td><td class="dep">'+fmt(t.dep)+'</td><td>'+art+ev+
+    '</td><td class="dep">'+fmt(t.upd)+'</td></tr>';
+}).join("");
+
+// ===== 验收维度（V05：数字由任务状态计算）=====
+var docIds = ["GOV-001","RES-001","GIT-001","VIS-001","VIS-002"];
+var docT = T.filter(function(t){return docIds.indexOf(t.id)>=0;});
+var dims = [
+  {d:"文档验收", cov:"GOV-001、RES-001、GIT-001、VIS-001、VIS-002（共 "+docT.length+" 项）",
+   r:"已验收 "+cnt(docT,"已验收")+" · 需返工 "+cnt(docT,"需返工")+" · 待审查 "+cnt(docT,"待审查"),
+   n:"数字由上述任务状态直接计算，与任务卡明细一致"},
+  {d:"构建验收", cov:"DEV-001（固件构建）；INT-001（已交付代码与测试）",
+   r:"固件构建已验收 0；本地模拟测试 74 PASS / 0 FAIL / 2 UNVERIFIED",
+   n:"测试套件通过不等于固件构建通过；DEV-001 仍阻塞于 DES-002"},
+  {d:"实机验收", cov:"全部硬件相关（主板已下单，到货情况待确认）",
+   r:"已验收 0",
+   n:"实机未测不折算为完成比例"}
+];
+document.getElementById("dims").innerHTML = dims.map(function(x){
+  return '<tr><td><b>'+fmt(x.d)+'</b></td><td class="dep">'+fmt(x.cov)+'</td><td>'+fmt(x.r)+'</td><td class="dep">'+fmt(x.n)+'</td></tr>';
+}).join("");
+
+// ===== 里程碑 =====
+document.getElementById("milestones").innerHTML = DATA.milestones.map(function(m){
+  return '<tr><td><b>'+fmt(m.s)+'</b></td><td>'+fmt(m.o)+'</td><td>'+fmt(m.w)+
+    '</td><td class="dep">'+fmt(m.c)+'</td><td>'+msTag(m.r)+'</td></tr>';
+}).join("");
+
+// ===== 范围检查（V04）=====
+document.getElementById("pub").innerHTML = DATA.scope.pub.map(function(x){return '<li>'+fmt(x)+'</li>';}).join("");
+document.getElementById("loc").innerHTML = DATA.scope.loc.map(function(x){return '<li>'+fmt(x)+'</li>';}).join("");
+
+// ===== 未决项 =====
+document.getElementById("open").innerHTML = DATA.open.map(function(x){return '<li>'+fmt(x)+'</li>';}).join("");
 </script>
 </body>
 </html>
