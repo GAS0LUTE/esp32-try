@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIS-003 阶段汇报（HY）：电脑接入阶段成果 + 树莓派相关性</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2329; --sub:#646a73;
+    --line:#e5e6eb; --blue:#2f6bff; --warn:#d97706; --red:#d92d20;
+    --green:#18794e; --gray:#8a9099; --bluebg:#eef3ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.65;padding:20px;max-width:1040px;margin:0 auto}
+  header{margin-bottom:16px}
+  h1{font-size:22px;font-weight:700}
+  .meta{color:var(--sub);font-size:13px;margin-top:4px}
+  .section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  .section h2{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section h2::before{content:"";width:4px;height:16px;background:var(--blue);border-radius:2px;display:inline-block}
+  .disc{font-size:12.5px;color:var(--warn);background:#fef6e7;border:1px solid #f5d9a8;border-radius:8px;padding:10px 12px;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--sub);font-weight:600;background:#fafbfc}
+  tr:hover td{background:#fafbff}
+  .rec{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap}
+  .r5{background:#e7f6ee;color:var(--green)} .r4{background:#eef3ff;color:var(--blue)}
+  .r3{background:#fff5e6;color:var(--warn)} .r2{background:#f0f1f3;color:var(--gray)} .r1{background:#fdecea;color:var(--red)}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600}
+  .t-hy{background:#eef3ff;color:var(--blue)} .t-res{background:#e7f6ee;color:var(--green)} .t-codex{background:#f0f1f3;color:var(--gray)}
+  .local{display:inline-block;font-size:10px;padding:1px 5px;border-radius:4px;background:#f0f1f3;color:var(--gray);
+    margin-left:5px;font-weight:600;border:1px solid var(--line)}
+  .box{background:#fafbfc;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+  .box h3{font-size:13px;margin-bottom:6px}
+  .box ol,.box ul{padding-left:20px;font-size:13px}
+  .box li{margin-bottom:5px}
+  code{background:#f0f1f3;padding:1px 5px;border-radius:4px;font-size:12px;word-break:break-all}
+  .judge{border-left:4px solid var(--blue);background:#f5f8ff;padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13px}
+  .ev{font-size:12px;color:var(--sub);margin-top:6px}
+  .pill{font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:#fff;display:inline-block;margin:2px 3px}
+  .pill.block{color:var(--red);border-color:#f3c2bd;background:#fdecea}
+  .pill.wait{color:var(--warn);border-color:#f5d9a8;background:#fef6e7}
+  footer{color:var(--gray);font-size:12px;text-align:center;padding:10px 0 20px}
+  a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+  details.ev-box{margin-top:8px;border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
+  details.ev-box>summary{cursor:pointer;padding:8px 12px;font-size:12.5px;color:var(--blue);font-weight:600;list-style:none}
+  details.ev-box>summary::-webkit-details-marker{display:none}
+  details.ev-box>summary::before{content:"▸ ";color:var(--sub)}
+  details.ev-box[open]>summary::before{content:"▾ "}
+  details.ev-box>.body{padding:0 12px 12px;font-size:12px;color:var(--sub);line-height:1.7}
+  details.ev-box .body code{display:inline-block;margin:1px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>VIS-003 阶段汇报（HY）：电脑接入阶段成果 + 树莓派相关性</h1>
+  <div class="meta">汇报人：HY / WorkBuddy ｜ 日期：2026-10-22 ｜ 依据：审查/INT-001-当前验收.md、审查/RES-002-树莓派当前审查.md、设计/VIS-003-电脑接入阶段汇报.md</div>
+</header>
+
+<div class="disc">
+  <b>署名与范围：</b>本文是 HY 的阶段汇报，<b>非 Kimi 回执</b>。标注 <span class="tag t-res">已验收</span> 来自 Codex 审查结论；<span class="tag t-hy">HY 整理</span> 为 HY 的归纳；<span class="tag t-codex">Codex 设计</span> 表示由 Codex 决定、DS 实现。
+  证据日志位于 <code>tests/codex-probe/logs/</code><span class="local">仅本地</span>（被 .gitignore 排除），本页以文字引用并标注，不生成公开死链。
+</div>
+
+<div class="section">
+  <h2>一、当前确认路线（V3-01）</h2>
+  <div class="box">
+    <h3><span class="tag t-codex">Codex 设计</span> 用户已确认：ESP32 终端 ＋ 现有电脑</h3>
+    <ul>
+      <li><b>首版路线</b>：ESP32-S3 方块（已下单微雪 ESP32-S3-LCD-1.47B-M）作为终端，由<b>现有电脑</b>运行连接程序与会话。模块化拆分 <b>ASR / TTS / 会话连接</b>三层，不立即引入多进程网络服务。</li>
+      <li><b>同一前台 agent 是采用前提</b>：树莓派常开服务<b>不等于</b>电脑前台同一 agent 持续可用；独立会话<b>不作为替代方案</b>。验证「同一会话接入」是后续采用任何上位机的前提。</li>
+      <li><b>树莓派仅后续候选</b>：当前不增加 ARM 实验任务；DS 不安装 ARM 工具链、不开展采购（RES-002 当前审查，责任划分）。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>二、电脑接入阶段成果（V3-04，主体）</h2>
+  <p class="ev">数字均引用对应本地日志；专项与主套件有重叠，<b>不相加</b>为独立场景总数。INT-001 总体仍<b>进行中</b>。</p>
+
+  <div class="box">
+    <h3>① 真实中文多行文字往返（已核实）</h3>
+    <p>实测一次真实中文多行往返：发送一段含中文、空格、连字符与标点的多行文本，对方回复了相同正文（无末尾换行）。这是<b>已受控的真实文字往返证据</b>，证明电脑侧会话连接可承载多行中文内容。</p>
+    <details class="ev-box">
+      <summary>技术证据（会话 / 回合标识、时间戳、复现输入）</summary>
+      <div class="body">
+        实验会话 <code>01a159f4-ec15-7a31-adb3-76a959c740c8</code><br>
+        回合 <code>01a15a06-a05b-7d43-82f1-d864d34cc81b</code><br>
+        收到（2026-10-20T15:55:46.159Z）：<code>S02 校验：中文、空格、连字符 - 与标点。\n第二行。\n</code><br>
+        回复（2026-10-20T15:55:50.084Z）：相同正文（无末尾换行）<br>
+        边界：这是实际文字往返证据，<b>不是自动流程所有边界通过的证明</b>。证据见 <code>审查/INT-001-当前验收.md</code><span class="local">仅本地</span>。
+      </div>
+    </details>
+  </div>
+
+  <div class="box">
+    <h3>② 发送可靠性本地 53 PASS / 0 FAIL（S04–S06，F02-S 发送套件）</h3>
+    <p>Codex 实跑发送套件：<b>53 PASS / 0 FAIL</b>（本地模拟，证据日志仅本地）。覆盖发送防重复、失焦后重新确认、不可读内容停止处理等边界。</p>
+    <details class="ev-box">
+      <summary>边界与复验项细节</summary>
+      <div class="body">
+        证据：<code>tests/codex-probe/logs/F02S-1792545363309-94641.jsonl</code><span class="local">仅本地</span><br>
+        独立复验项：图片类型读回 → <code>unreadable</code>；<code>now=10000 / capturedAt=1</code> → <code>stale-sample</code>；连续 A/B 回合序列中 <code>second</code> 绑定 B 并关联 B 的回复；代码内全选/复制/粘贴前有目标核对。<br>
+        <b>边界（不放行无人看管发送）</b>：<code>--confirm-focus</code> 是<b>人工确认声明</b>，不是程序对输入焦点的自动证明，不能默认开启或作永久授权；失焦后须重新确认；复制不可读时停止，不用 OCR 空判定跳过全文读回。
+      </div>
+    </details>
+  </div>
+
+  <div class="box">
+    <h3>③ F03-P 只读日志观察本地 26 PASS / 0 FAIL（已验收，仅只读范围）</h3>
+    <p>Codex 实跑：<b>26 PASS / 0 FAIL</b>（仅只读日志观察范围，证据日志仅本地）。当前能力：解析历史问题及选项、校验会话元数据、隔离已测试回合边界、合并重复候选。</p>
+    <details class="ev-box">
+      <summary>补测与边界细节</summary>
+      <div class="body">
+        主套件证据：<code>tests/codex-probe/logs/F03P-1792546444879-96881.jsonl</code><span class="local">仅本地</span><br>
+        独立补测（延迟 <code>task_complete</code> / <code>task_failed</code> / <code>token_count</code>）4 项均通过：<code>tests/codex-probe/logs/F03P-accept-1792546444912.json</code><span class="local">仅本地</span>。两组均模拟，不相加。<br>
+        <b>边界（不得展示为实时待办功能完成）</b>：生产解析器始终 <code>unknown</code>，全部候选不可回答；真实桌面当前是否有待办、待办是否有效、实时关闭与答复通路<b>均未验证</b>；CLI 前台采样及真实展示本轮未重跑，本地解析验收<b>不能替代</b>端到端验收。
+      </div>
+    </details>
+  </div>
+
+  <div class="box">
+    <h3>④ 阶段总状态</h3>
+    <ul>
+      <li>INT-001：<b>进行中</b>。本地模拟主体（74 PASS / 0 FAIL / 2 UNVERIFIED，证据 <code>mock-summary-1792407623223.json</code><span class="local">仅本地</span>；R01–R02 专项 6 PASS，证据 <code>tests/codex-probe/logs/R01-R02-repro-1792407623252-35756.jsonl</code><span class="local">仅本地</span>）已验收。</li>
+      <li><b>2 项 UNVERIFIED 为：上游消息幂等、服务器侧真实中途断线。</b></li>
+      <li><b>桌面接入单独描述</b>：已有受控真实文字往返（见①），但<b>实时确认与无人值守通路未验收</b>，不冒充主套件未验证项。</li>
+      <li><span class="pill block">音频与硬件实机未验收</span> <span class="pill wait">电池路线暂停</span></li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>三、音频方案（V3-02）</h2>
+  <div class="box">
+    <h3><span class="tag t-codex">Codex 设计</span> 首版：按键发起、轮流听说；AEC 待评估</h3>
+    <ul>
+      <li><b>首版形态</b>：按键发起对话、轮流听说（听→说→屏显状态），<b>不预设语音唤醒</b>。</li>
+      <li><b>软件 AEC 与独立音频处理器均为待评估候选</b>：乐鑫官方 ESP32-S3 文档已提供接收 mic/ref 的软件 AEC 处理接口
+        （<a href="https://docs.espressif.com/projects/esp-sr/en/latest/esp32s3/acoustic_echo_cancellation/README.html" target="_blank" rel="noopener">esp-sr AEC 文档</a>）；
+        <b>接口存在 ≠ 本项目音频接线与效果已验证</b>。</li>
+      <li><b>不作为已批准约束</b>：硬件回采、双麦、XMOS、物理断电开关<b>不得呈现为已定方案</b>；具体接线、器件与验收由 <span class="tag t-codex">Codex 设计</span>、DS 实现验证。</li>
+      <li><b>播放中语音打断</b>：<b>待用户后续决定</b>，当前非已批准开发项。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>四、树莓派相关性（后续候选，按 RES-002 当前审查统一，V3-01/V3-03）</h2>
+  <table>
+    <tr><th>结论</th><th>当前口径（统一后）</th><th>推荐</th></tr>
+    <tr>
+      <td>借鉴语音卫星状态划分</td>
+      <td>事件序列（run_start→…→error / announce）可作屏幕状态机裁剪蓝本；<b>结构可借鉴，不含代码许可义务</b>（ESPHome runtime 为 GPLv3，复用代码须固定版本并核实许可，不作一概法律保证）</td>
+      <td><span class="rec r4">4/5</span></td>
+    </tr>
+    <tr>
+      <td>树莓派作常开上位机</td>
+      <td>后续常开语音服务候选；<b>常开服务不等于电脑前台同一 agent 持续可用</b>，同一前台 agent 接入待证明，当前不开展 ARM 实验。Codex CLI 有 Linux arm64 二进制（Apache-2.0），但 <code>app-server</code> 在 arm64 无头行为<b>未查证</b>，须先满足「同一前台 agent」前提</td>
+      <td><span class="rec r3">3/5</span></td>
+    </tr>
+    <tr>
+      <td>本地 ASR/TTS</td>
+      <td>Piper 社区自测快于实时、whisper 中文质量与延迟<b>未测</b>；性能未经项目实测，<b>不称已证实足够</b></td>
+      <td><span class="rec r3">3/5</span></td>
+    </tr>
+    <tr>
+      <td>换树莓派做方块主控</td>
+      <td>当前维持已购 ESP32；缺少同条件测量（ESP32-S3 官方功耗/启动未查证），<b>不作全面优劣判断</b>。Pi 5 16GB <b>$305（2026-10-19 官网读取，非实时价承诺）</b></td>
+      <td><span class="rec r1">1/5</span></td>
+    </tr>
+  </table>
+  <div class="judge">
+    <span class="tag t-hy">HY 整理</span> 树莓派价值定位为「上位机/服务端候选 + 架构参考」，<b>非首版路线</b>。比较结论均带适用条件与来源；价格标注读取时间、性能不称已证实；架构借鉴不称零成本；不宣称已解决电脑休眠/掉线；换主控不作六项全面劣化结论。
+  </div>
+</div>
+
+<div class="section">
+  <h2>五、未查证 / 待评估项</h2>
+  <ul style="font-size:13px;padding-left:20px">
+    <li>上游消息幂等、服务器侧真实中途断线（INT-001 的 2 项 UNVERIFIED）。</li>
+    <li>真实待办来源与生命周期、实时关闭与答复通路（F03-P 边界）。</li>
+    <li><code>codex app-server</code> 在 arm64 无头环境行为（Pi 上位机前提）。</li>
+    <li>中文 ASR 在 Pi 上的质量与延迟；ESPHome/Wyoming/microWakeWord 固定提交与许可（若复用代码须先 pin）。</li>
+    <li>播放中语音打断是否启用（决定音频是否需 AEC 回路）。</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>六、范围与证据</h2>
+  <div style="font-size:13px">
+    <p style="margin-bottom:6px"><b>公开（随 dashboard/ 同步）</b>：本页、dashboard/ 看板、设计大纲、DS 代码。</p>
+    <p style="margin-bottom:6px"><b>仅本地（不同步）</b>：<code>tests/codex-probe/logs/*</code><span class="local">仅本地</span>、<code>research/</code>、<code>交付报告/</code>、<code>审查/</code>、台账、AGENTS.md。</p>
+    <p style="color:var(--sub)">外部公开链接：乐鑫 esp-sr AEC 文档（已核对存在）。其余证据均为本地日志，按同步约定不进公开仓库。</p>
+  </div>
+</div>
+
+<footer>HY / WorkBuddy · VIS-003 阶段汇报 · 生成时间固定 2026-10-22 · 依据 INT-001 / RES-002 当前审查</footer>
+</body>
+</html>

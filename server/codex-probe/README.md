@@ -10,10 +10,15 @@
 | `probe-stdio.mjs` | stdio 握手 + 单次只读调用 |
 | `probe-socket.mjs` | 裸 Unix socket 握手（对照用） |
 | `probe-ws-unix.mjs` | WebSocket over Unix socket 握手（手工实现 Upgrade 与帧） |
+| `../tests/codex-probe/probe-front-target.mjs` | 前台应用、ChatGPT 窗口标题与线程索引的只读映射 |
+| `../tests/codex-probe/tools/winlist.swift` | CoreGraphics 窗口枚举辅助程序 |
+| `../tests/codex-probe/f02-preflight.mjs` | F02-P 预演：截图 + OCR 锚点 + 9 项检查，不发送事件 |
+| `lib/preflight-geometry.mjs` | 数值坐标换算与 sendChecks 评估（无截图可测） |
 | `lib/rpc-client.mjs` | JSON-RPC 客户端：请求超时、子进程退出拒绝、进程组回收 |
 | `lib/turn-observer.mjs` | 回合观察：先注册监听、按 threadId/turnId 过滤、早到通知缓冲 |
 | `lib/server-request-router.mjs` | server request 分派：代次/线程/回合绑定、resolved、未实现类型 |
 | `lib/input-state.mjs` | 输入状态机与发送门禁：未发送/待确认/处理中/已完成/结果未知 |
+| `lib/target-tracker.mjs` | 前台目标绑定：稳定计数、显式确认、变化停发 |
 | `lib/version-check.mjs` | 二进制版本与 schema 摘要一致性检查 |
 | `lib/log.mjs` | 字段白名单 + 本机信息脱敏日志 |
 | `schema/`、`schema-0.163/` | 两个版本的协议定义（各带 `manifest.json`） |

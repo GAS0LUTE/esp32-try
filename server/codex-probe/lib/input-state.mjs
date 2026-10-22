@@ -14,6 +14,7 @@ export function createInputController({ sendTurn, log, now = () => Date.now() } 
   let ready = true; // 重连后为 false，显式核对通过才恢复发送
   let current = null; // 从发送开始到确认/结束都占用
   let seq = 0;
+  let targetGeneration = 0;
   const held = [];
   const registered = new Map();
   const history = [];
@@ -42,7 +43,7 @@ export function createInputController({ sendTurn, log, now = () => Date.now() } 
   };
 
   const submit = (text, meta = {}) => {
-    const msg = { localId: `local-${++seq}`, text, ...meta, state: INPUT_STATE.UNSENT, createdAt: now() };
+    const msg = { localId: `local-${++seq}`, text, ...meta, targetGeneration, state: INPUT_STATE.UNSENT, createdAt: now() };
     registered.set(msg.localId, msg);
     if (!canSend()) {
       const reason = !connected ? "disconnected" : !ready ? "checking" : "busy";
@@ -105,6 +106,10 @@ export function createInputController({ sendTurn, log, now = () => Date.now() } 
     if (!connected) return { action: "blocked", reason: "disconnected", snapshot: snapshot() };
     if (!ready) return { action: "blocked", reason: "checking", snapshot: snapshot() };
     if (current) return { action: "blocked", reason: "busy", snapshot: snapshot() };
+    const head = held[0];
+    if (head && head.targetGeneration !== targetGeneration) {
+      return { action: "blocked", reason: "target-changed", snapshot: snapshot() };
+    }
     const msg = held.shift();
     if (!msg) return { action: "empty", snapshot: snapshot() };
     return dispatch(msg);
@@ -116,6 +121,9 @@ export function createInputController({ sendTurn, log, now = () => Date.now() } 
     if (!ready) return { action: "blocked", reason: "checking", snapshot: snapshot() };
     if (current) return { action: "blocked", reason: "busy", snapshot: snapshot() };
     const msg = registered.get(localId);
+    if (msg && msg.targetGeneration !== targetGeneration) {
+      return { action: "blocked", reason: "target-changed", snapshot: snapshot() };
+    }
     if (!msg) return { action: "blocked", reason: "not-found", snapshot: snapshot() };
     if (msg.state !== INPUT_STATE.UNKNOWN) {
       return { action: "blocked", reason: `state:${msg.state}`, snapshot: snapshot() };
@@ -125,6 +133,13 @@ export function createInputController({ sendTurn, log, now = () => Date.now() } 
 
   return {
     state: INPUT_STATE,
+    setTargetGeneration(gen) {
+      if (gen === targetGeneration) return false;
+      targetGeneration = gen;
+      record({ action: "target-generation", generation: gen });
+      return true;
+    },
+    targetGeneration: () => targetGeneration,
     submit,
     ack,
     turnCompleted,

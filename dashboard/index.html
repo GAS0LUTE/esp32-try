@@ -76,7 +76,7 @@
 <div class="stage">
   📌 <b>阶段汇报（本地接入验证小阶段）</b><br>
   <a href="INT-001-阶段汇报.html">INT-001-阶段汇报.html · 电脑接入验证（本地模拟范围）</a>
-  <div class="dep">主套件 74 PASS / 0 FAIL / 2 UNVERIFIED；专项复现 6 PASS / 0 FAIL。<b>INT-001 整体仍为阻塞</b>，本汇报不代表整体已验收。</div>
+  <div class="dep">主套件 74 PASS / 0 FAIL / 2 UNVERIFIED（未验证项：上游消息幂等、服务器侧真实中途断线）；专项复现 6 PASS / 0 FAIL。INT-001 整体为<b>进行中</b>，本汇报不代表整体已验收。另有 <a href="VIS-003-阶段汇报.html">VIS-003 阶段汇报（电脑接入阶段成果 + 树莓派相关性）</a>。</div>
 </div>
 
 <div class="section">
@@ -153,25 +153,25 @@
 
 <script>
 // ===== 固定生成时间（V02：不随打开时间变化）=====
-var GENERATED = "2026-10-19 19:32 CST";
+var GENERATED = "2026-10-22 13:30 CST";
 
 // ===== HY 嵌入快照数据 =====
 var DATA = {
-  snapshot: "2026-10-19 19:01",
+  snapshot: "2026-10-22 13:15",
   phase: "协作框架建立 / 总体设计草案",
   next: "Codex 与用户确定首版会话入口（是否采用连接程序管理的专用工作会话），随后制定真实集成与电脑语音闭环设计；Kimi 处理 RES-001 的 K2-01–03。",
   blockers: [
-    "INT-001 阻塞：R01、R02 本地模拟已验收，整体等待会话接入方案确认",
+    "INT-001 进行中：R01、R02 本地模拟已验收；F03-P 本地日志观察 26 PASS/0 FAIL（仅只读范围）；整体等待会话接入方案确认（2 项 UNVERIFIED：上游消息幂等、服务器侧真实中途断线）",
     "DEV-001 阻塞于 DES-002 未批准（固件构建未开始）",
     "RES-001 需返工：K2-01–03 待 Kimi 处理",
     "电池路线 PWR-001 暂停，未通过安全放行"
   ],
   waiting: "用户确认首版会话入口；Kimi 修订 RES-001（K2-01–03）；Codex 复验 HY 的 VIS-001 修订与 VIS-002 汇报",
-  latest: "INT-001：R01、R02 本地模拟已由 Codex 验收（主套件 74 PASS / 0 FAIL / 2 UNVERIFIED；专项复现 6 PASS / 0 FAIL），DS 交付 server/codex-probe 与 tests/codex-probe；Codex 复验 RES-001 结论为需返工（K2-01–03 交 Kimi）；主板已下单（微雪 ESP32-S3-LCD-1.47B-M），到货情况待确认；语音唤醒、播放中语音打断、主动播报由用户后续决定；HY 本轮交付 VIS-002 阶段汇报，并完成 VIS-001 的 V01–V05 修订。",
+  latest: "INT-001：R01、R02 本地模拟已由 Codex 验收（主套件 74 PASS / 0 FAIL / 2 UNVERIFIED；专项复现 6 PASS / 0 FAIL），DS 交付 server/codex-probe 与 tests/codex-probe；Codex 复验 RES-001 结论为需返工（K2-01–03 交 Kimi）；主板已下单（微雪 ESP32-S3-LCD-1.47B-M），到货情况待确认；语音唤醒、播放中语音打断、主动播报由用户后续决定；HY 交付 VIS-002 阶段汇报与 VIS-001 的 V01–V05 修订；HY 按 VIS-003 交付《VIS-003 阶段汇报》（以电脑接入阶段成果为主体，树莓派降为后续候选，音频改「轮流听说、AEC 待评估」，未将双麦/XMOS/断电开关列为已批准约束；旧树莓派专题页已删除）。",
   git: [
-    {k:"本地 HEAD", v:"e991cde", d:"2026-10-19 提交，含 .gitignore、README.md、dashboard/index.html、dashboard/使用说明.md、项目设计大纲.md"},
-    {k:"远程引用 origin/main（普通文本，非链接）", v:"e991cde", d:"本地远程跟踪引用与本地 HEAD 一致（上次 fetch 后的本地记录；本轮未访问远程服务器，不作远程服务器核验结论）"},
-    {k:"同步规则", v:"用户明确说“同步”后执行", d:"已按用户指令同步过一次；当前有未提交改动，未收到新的同步授权"},
+    {k:"本地 HEAD", v:"be4a551", d:"2026-10-19 同步提交，含 DS 代码、dashboard/（含 INT-001 阶段汇报与两张截图）、项目设计大纲.md、.gitignore"},
+    {k:"远程引用 origin/main（普通文本，非链接）", v:"be4a551", d:"本地远程跟踪引用与本地 HEAD 一致（上次 fetch 后的本地记录；本轮未访问远程服务器，不作远程服务器核验结论）"},
+    {k:"同步规则", v:"用户明确说“同步”后执行", d:"已按用户指令同步过一次；当前有未提交改动（含本汇报页），未收到新的同步授权"},
     {k:"公开仓库", v:"github.com/GAS0LUTE/esp32-try", d:"仅白名单内容；协作内容与个人资料已排除"}
   ],
   tasks: [
@@ -182,14 +182,14 @@ var DATA = {
     {id:"VIS-002",name:"本地接入验证阶段汇报",owner:"HY / WorkBuddy",status:"待审查",dep:"任务卡 设计/VIS-002-接入验证阶段汇报.md；已按 H01/H02/H05 修订并补交截图，待 Codex 复验",art:"dashboard/INT-001-阶段汇报.html",ev:"交付报告/HY-VIS-002.md · 审查/HY-当前验收.md",upd:"2026-10-19"},
     {id:"DES-001",name:"与用户收敛首版需求",owner:"Codex",status:"进行中",dep:"已确认按键语音与 Codex 交互、查询待确认事项；预算待补充",art:"—",upd:"2026-10-19"},
     {id:"DES-002",name:"选定技术基线和接口设计",owner:"Codex",status:"进行中",dep:"总体计划草案已落盘；细化电脑会话接入验证与硬件设计",art:"—",upd:"2026-10-19"},
-    {id:"INT-001",name:"电脑端 Codex 会话接入验证",owner:"DS；Codex 设计验收",status:"阻塞",dep:"R01、R02 本地模拟已验收；整体等待会话接入方案确认",art:"server/codex-probe/ · tests/codex-probe/",ev:"交付报告/DS-INT-001.md · 审查/INT-001-当前验收.md",upd:"2026-10-19"},
+    {id:"INT-001",name:"电脑端 Codex 会话接入验证",owner:"DS；Codex 设计验收",status:"进行中",dep:"R01、R02 本地模拟已验收；F03-P 本地日志观察 26 PASS/0 FAIL（仅只读范围）；整体等待会话接入方案确认（2 项 UNVERIFIED：上游消息幂等、服务器侧真实中途断线）",art:"server/codex-probe/ · tests/codex-probe/",ev:"交付报告/DS-INT-001.md · 审查/INT-001-当前验收.md",upd:"2026-10-22"},
     {id:"DEV-001",name:"建立可复现的最小固件构建",owner:"DS",status:"阻塞",dep:"DES-002 批准",art:"—",upd:"2026-10-19"},
     {id:"PWR-001",name:"电池方案核验与整机供电审查",owner:"Codex 设计监督",status:"暂停",dep:"用户恢复此阶段",art:"—",upd:"2026-10-19"}
   ],
   milestones: [
     {s:"A 需求收敛",o:"Codex + 用户",w:"首版范围、体验流程、预算边界、硬件现状",c:"关键需求明确，未决项有记录",r:"进行中"},
     {s:"B 案例调研",o:"Kimi",w:"案例对比、复用清单、许可证、技术风险",c:"Codex 可追溯来源并完成路线比较",r:"需返工（K2-01–03 待 Kimi 处理）"},
-    {s:"B2 电脑接入本地模拟验证",o:"DS（Codex 验收）",w:"server/codex-probe、tests/codex-probe、R01/R02 本地模拟",c:"模拟套件与专项复现通过，证据可追溯",r:"已验收（仅本地模拟范围；INT-001 整体仍阻塞）"},
+    {s:"B2 电脑接入本地模拟验证",o:"DS（Codex 验收）",w:"server/codex-probe、tests/codex-probe、R01/R02 本地模拟",c:"模拟套件与专项复现通过，证据可追溯",r:"已验收（仅本地模拟范围；INT-001 整体进行中）"},
     {s:"C 总体设计",o:"Codex",w:"选定基线、架构、引脚/供电审查、接口约定、验收目标",c:"用户确认重要取舍；实现任务条件齐备",r:"进行中"},
     {s:"D 最小构建",o:"DS",w:"固定版本、构建说明、配置模板、可复现日志",c:"Codex 核对可构建；实机未测单独标明",r:"未开始（阻塞于 DES-002）"},
     {s:"E USB 硬件验证",o:"DS + 用户",w:"屏幕、输入、录音、播放分项测试与证据",c:"分项通过；不跳过供电和引脚核对",r:"未测 / 待确认（主板已下单，到货情况待确认）"},
@@ -201,7 +201,7 @@ var DATA = {
   scope: {
     pub: [
       "README.md、项目设计大纲.md、.gitignore",
-      "dashboard/index.html、使用说明.md、INT-001-阶段汇报.html",
+      "dashboard/index.html、使用说明.md、INT-001-阶段汇报.html、VIS-003-阶段汇报.html",
       "server/codex-probe/**（DS 代码）",
       "tests/codex-probe/**（DS 测试，logs/ 除外）"
     ],
@@ -217,7 +217,8 @@ var DATA = {
   open: [
     "首版会话入口：是否以连接程序管理的专用工作会话作为入口，待用户确认；共享持久化历史不等于共享实时执行",
     "桌面接入：已测入口未建立同一会话实时双向能力；其他接入方式尚未证明；独立实例可用于技术验证",
-    "服务器侧真实中途断线、待办恢复、上游消息幂等、同一线程并发均未验证；保持不自动重发策略",
+    "INT-001 的 2 项 UNVERIFIED：上游消息幂等、服务器侧真实中途断线（其余待办恢复、同一线程并发为额外未验证项）",
+    "F03-P 本地日志观察 26 PASS/0 FAIL 已验收（仅只读解析范围；生产解析器始终 unknown，实时待办通路未验证）",
     "文件审批真实接口、语音输入/播报、账号用量未验证",
     "主板已下单（微雪 ESP32-S3-LCD-1.47B-M），到货情况待确认；外接音频模块待确认；预算与服务费用边界",
     "语音唤醒、播放中语音打断、主动播报：后续由用户决定，未作为已批准开发项",
@@ -238,7 +239,7 @@ var KNOWN = [
   "交付报告/Kimi-回执-K3-2026-10-19.md","交付报告/DS-INT-001.md","交付报告/HY-VIS-002.md",
   "审查/成果复验-2026-10-19.md","审查/INT-001-当前验收.md","审查/HY-当前验收.md",
   "设计/INT-001-电脑接入验证任务.md","设计/VIS-002-接入验证阶段汇报.md",
-  "dashboard/index.html","dashboard/使用说明.md","dashboard/INT-001-阶段汇报.html",
+  "dashboard/index.html","dashboard/使用说明.md","dashboard/INT-001-阶段汇报.html","dashboard/VIS-003-阶段汇报.html",
   "server/codex-probe/","tests/codex-probe/"
 ];
 function linkify(t){
