@@ -157,33 +157,33 @@ var GENERATED = "2026-10-22 13:30 CST";
 
 // ===== HY 嵌入快照数据 =====
 var DATA = {
-  snapshot: "2026-10-22 13:15",
+  snapshot: "2026-11-02 23:15",
   phase: "协作框架建立 / 总体设计草案",
-  next: "Codex 与用户确定首版会话入口（是否采用连接程序管理的专用工作会话），随后制定真实集成与电脑语音闭环设计；Kimi 处理 RES-001 的 K2-01–03。",
+  next: "验证当前会话的真实待确认状态及其有效期（下一阶段关键）；Codex 与用户确定首版会话入口（是否采用连接程序管理的专用工作会话），随后制定真实集成与电脑语音闭环设计；Kimi 处理 RES-001 的 K2-01–03。",
   blockers: [
     "INT-001 进行中：R01、R02 本地模拟已验收；F03-P 本地日志观察 26 PASS/0 FAIL（仅只读范围）；整体等待会话接入方案确认（2 项 UNVERIFIED：上游消息幂等、服务器侧真实中途断线）",
-    "DEV-001 阻塞于 DES-002 未批准（固件构建未开始）",
+    "DEV-001 进行中：显示已用户确认；按键计数与 270s 稳定性有用户观察/日志实测证据；10 分钟/RESET/USB 重连/恢复写回待验证",
     "RES-001 需返工：K2-01–03 待 Kimi 处理",
     "电池路线 PWR-001 暂停，未通过安全放行"
   ],
-  waiting: "用户确认首版会话入口；Kimi 修订 RES-001（K2-01–03）；Codex 复验 HY 的 VIS-001 修订与 VIS-002 汇报",
-  latest: "INT-001：R01、R02 本地模拟已由 Codex 验收（主套件 74 PASS / 0 FAIL / 2 UNVERIFIED；专项复现 6 PASS / 0 FAIL），DS 交付 server/codex-probe 与 tests/codex-probe；Codex 复验 RES-001 结论为需返工（K2-01–03 交 Kimi）；主板已下单（微雪 ESP32-S3-LCD-1.47B-M），到货情况待确认；语音唤醒、播放中语音打断、主动播报由用户后续决定；HY 交付 VIS-002 阶段汇报与 VIS-001 的 V01–V05 修订；HY 按 VIS-003 交付《VIS-003 阶段汇报》（以电脑接入阶段成果为主体，树莓派降为后续候选，音频改「轮流听说、AEC 待评估」，未将双麦/XMOS/断电开关列为已批准约束；旧树莓派专题页已删除）。",
+  waiting: "用户确认首版会话入口；Kimi 修订 RES-001（K2-01–03）；当前会话真实待确认状态及其有效期的验证",
+  latest: "INT-001：R01、R02 本地模拟已由 Codex 验收（主套件 74 PASS / 0 FAIL / 2 UNVERIFIED；专项复现 6 PASS / 0 FAIL），DS 交付 server/codex-probe 与 tests/codex-probe；Codex 复验 RES-001 结论为需返工（K2-01–03 交 Kimi）；主板已下单（微雪 ESP32-S3-LCD-1.47B-M），到货情况待确认；语音唤醒、播放中语音打断、主动播报由用户后续决定；HY 交付 VIS-002 阶段汇报与 VIS-001 的 V01–V05 修订；HY 按 VIS-003 交付《VIS-003 阶段汇报》（以电脑接入阶段成果为主体，树莓派降为后续候选，音频改「轮流听说、AEC 待评估」，未将双麦/XMOS/断电开关列为已批准约束；旧树莓派专题页已删除）；VIS-003 阶段汇报已于 2026-10-22 通过 Codex 验收（整包含汇报页、回执与重渲截图）；HY 已交付 DEV-001 阶段汇报（dashboard/DEV-001-阶段汇报.html），区分用户观察/日志实测/待验证，整体仍进行中。",
   git: [
-    {k:"本地 HEAD", v:"be4a551", d:"2026-10-19 同步提交，含 DS 代码、dashboard/（含 INT-001 阶段汇报与两张截图）、项目设计大纲.md、.gitignore"},
-    {k:"远程引用 origin/main（普通文本，非链接）", v:"be4a551", d:"本地远程跟踪引用与本地 HEAD 一致（上次 fetch 后的本地记录；本轮未访问远程服务器，不作远程服务器核验结论）"},
-    {k:"同步规则", v:"用户明确说“同步”后执行", d:"已按用户指令同步过一次；当前有未提交改动（含本汇报页），未收到新的同步授权"},
+    {k:"本地 HEAD", v:"010a092", d:"2026-10-22 同步提交（be4a551..010a092），含 DS 代码、dashboard/（含 VIS-003 阶段汇报与重渲截图）、项目设计大纲.md、.gitignore"},
+    {k:"远程引用 origin/main（普通文本，非链接）", v:"010a092", d:"推送后 fetch 核对：origin/main = 本地 HEAD = 010a092（已校验一致）"},
+    {k:"同步规则", v:"用户明确说“同步”后执行", d:"已按用户指令同步三次（最新 2026-10-22 14:34）；本页 Git 区块刷新后产生新的未提交改动，等待新的同步授权"},
     {k:"公开仓库", v:"github.com/GAS0LUTE/esp32-try", d:"仅白名单内容；协作内容与个人资料已排除"}
   ],
   tasks: [
     {id:"GOV-001",name:"建立规则、大纲、台账",owner:"Codex",status:"待审查",dep:"文件已创建；待用户审阅整体设计",art:"AGENTS.md · 项目设计大纲.md · 任务与验收台账.md",upd:"2026-10-19"},
     {id:"RES-001",name:"调研成熟 ESP32 AI 硬件案例",owner:"Kimi / WorkBuddy",status:"需返工",dep:"v2 与补充核查已复验；处理 K2-01–03",art:"research/案例对比.md · research/推荐路线.md · research/计划预审-AppServer核对-K3-2026-10-19.md",ev:"交付报告/Kimi-回执-K3-2026-10-19.md · 审查/成果复验-2026-10-19.md",upd:"2026-10-19"},
-    {id:"GIT-001",name:"初始化本地 Git 与首次基线提交",owner:"HY / WorkBuddy",status:"待审查",dep:"仓库已建立；已提供本地/远程核对证据",art:".gitignore · 本仓库",ev:"本地 HEAD e991cde = 远程 origin/main e991cde（已核对）",upd:"2026-10-19"},
-    {id:"VIS-001",name:"建立本地可视化看板",owner:"HY / WorkBuddy",status:"待审查",dep:"已按 V01–V05 与 H01–H05 修订；截图已补交，待 Codex 复验",art:"dashboard/index.html · dashboard/使用说明.md",ev:"本页 · 交付报告/HY-VIS-002.md · 审查/HY-当前验收.md",upd:"2026-10-19"},
-    {id:"VIS-002",name:"本地接入验证阶段汇报",owner:"HY / WorkBuddy",status:"待审查",dep:"任务卡 设计/VIS-002-接入验证阶段汇报.md；已按 H01/H02/H05 修订并补交截图，待 Codex 复验",art:"dashboard/INT-001-阶段汇报.html",ev:"交付报告/HY-VIS-002.md · 审查/HY-当前验收.md",upd:"2026-10-19"},
+    {id:"GIT-001",name:"初始化本地 Git 与首次基线提交",owner:"HY / WorkBuddy",status:"待审查",dep:"仓库已建立；已提供本地/远程核对证据",art:".gitignore · 本仓库",ev:"本地 HEAD 010a092 = 远程 origin/main 010a092（推送后 fetch 核对一致）",upd:"2026-10-22"},
+    {id:"VIS-001",name:"建立本地可视化看板",owner:"HY / WorkBuddy",status:"已验收",dep:"已按 V01–V05 与 H01–H05 修订并补交截图；Codex 已验收",art:"dashboard/index.html · dashboard/使用说明.md",ev:"本页 · 交付报告/HY-VIS-002.md · 审查/HY-当前验收.md",upd:"2026-10-22"},
+    {id:"VIS-002",name:"本地接入验证阶段汇报",owner:"HY / WorkBuddy",status:"已验收",dep:"已按 H01/H02/H05 修订并补交截图；Codex 已验收",art:"dashboard/INT-001-阶段汇报.html",ev:"交付报告/HY-VIS-002.md · 审查/HY-当前验收.md",upd:"2026-10-22"},
     {id:"DES-001",name:"与用户收敛首版需求",owner:"Codex",status:"进行中",dep:"已确认按键语音与 Codex 交互、查询待确认事项；预算待补充",art:"—",upd:"2026-10-19"},
     {id:"DES-002",name:"选定技术基线和接口设计",owner:"Codex",status:"进行中",dep:"总体计划草案已落盘；细化电脑会话接入验证与硬件设计",art:"—",upd:"2026-10-19"},
     {id:"INT-001",name:"电脑端 Codex 会话接入验证",owner:"DS；Codex 设计验收",status:"进行中",dep:"R01、R02 本地模拟已验收；F03-P 本地日志观察 26 PASS/0 FAIL（仅只读范围）；整体等待会话接入方案确认（2 项 UNVERIFIED：上游消息幂等、服务器侧真实中途断线）",art:"server/codex-probe/ · tests/codex-probe/",ev:"交付报告/DS-INT-001.md · 审查/INT-001-当前验收.md",upd:"2026-10-22"},
-    {id:"DEV-001",name:"建立可复现的最小固件构建",owner:"DS",status:"阻塞",dep:"DES-002 批准",art:"—",upd:"2026-10-19"},
+    {id:"DEV-001",name:"USB 屏幕与按键最小固件（D5 已烧写）",owner:"DS；Codex 实验",status:"进行中",dep:"D5 已编译/烧写/校验通过；显示用户确认；按键计数与 270s 稳定性有证据；10 分钟/RESET/USB 重连/恢复写回待验证",art:"dashboard/DEV-001-阶段汇报.html",upd:"2026-11-02"},
     {id:"PWR-001",name:"电池方案核验与整机供电审查",owner:"Codex 设计监督",status:"暂停",dep:"用户恢复此阶段",art:"—",upd:"2026-10-19"}
   ],
   milestones: [
@@ -191,7 +191,7 @@ var DATA = {
     {s:"B 案例调研",o:"Kimi",w:"案例对比、复用清单、许可证、技术风险",c:"Codex 可追溯来源并完成路线比较",r:"需返工（K2-01–03 待 Kimi 处理）"},
     {s:"B2 电脑接入本地模拟验证",o:"DS（Codex 验收）",w:"server/codex-probe、tests/codex-probe、R01/R02 本地模拟",c:"模拟套件与专项复现通过，证据可追溯",r:"已验收（仅本地模拟范围；INT-001 整体进行中）"},
     {s:"C 总体设计",o:"Codex",w:"选定基线、架构、引脚/供电审查、接口约定、验收目标",c:"用户确认重要取舍；实现任务条件齐备",r:"进行中"},
-    {s:"D 最小构建",o:"DS",w:"固定版本、构建说明、配置模板、可复现日志",c:"Codex 核对可构建；实机未测单独标明",r:"未开始（阻塞于 DES-002）"},
+    {s:"D 最小构建",o:"DS",w:"固定版本、构建说明、配置模板、可复现日志",c:"Codex 核对可构建；实机未测单独标明",r:"进行中（D5 已烧写；显示/按键/稳定性有证据；10 分钟/RESET/USB 重连/恢复写回待验证）"},
     {s:"E USB 硬件验证",o:"DS + 用户",w:"屏幕、输入、录音、播放分项测试与证据",c:"分项通过；不跳过供电和引脚核对",r:"未测 / 待确认（主板已下单，到货情况待确认）"},
     {s:"F 对话集成",o:"DS",w:"单轮对话、状态 UI、失败恢复",c:"依据测试清单通过，日志与体验一致",r:"未测 / 待确认"},
     {s:"G 体验优化",o:"DS，Codex 验收",w:"音频效果、稳定性优化；语音唤醒与播放中语音打断待用户决定是否纳入",c:"分别提交实测，不以主观代替",r:"后续待用户决定（唤醒 / 打断未作为已批准开发项）"},
@@ -322,8 +322,8 @@ var dims = [
    r:"已验收 "+cnt(docT,"已验收")+" · 需返工 "+cnt(docT,"需返工")+" · 待审查 "+cnt(docT,"待审查"),
    n:"数字由上述任务状态直接计算，与任务卡明细一致"},
   {d:"构建验收", cov:"DEV-001（固件构建）；INT-001（已交付代码与测试）",
-   r:"固件构建已验收 0；本地模拟测试 74 PASS / 0 FAIL / 2 UNVERIFIED",
-   n:"测试套件通过不等于固件构建通过；DEV-001 仍阻塞于 DES-002"},
+   r:"固件 D5 已编译/烧写/校验通过；实机验收进行中、未计为已验收；本地模拟测试 74 PASS / 0 FAIL / 2 UNVERIFIED",
+   n:"测试/编译通过不等于实机验收通过；DEV-001 10 分钟/RESET/USB 重连/恢复写回待验证"},
   {d:"实机验收", cov:"全部硬件相关（主板已下单，到货情况待确认）",
    r:"已验收 0",
    n:"实机未测不折算为完成比例"}

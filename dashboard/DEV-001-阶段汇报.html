@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV-001 阶段汇报（HY）：USB 屏幕与按键最小固件</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1f2329; --sub:#646a73;
+    --line:#e5e6eb; --blue:#2f6bff; --warn:#d97706; --red:#d92d20;
+    --green:#18794e; --gray:#8a9099; --bluebg:#eef3ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.65;padding:20px;max-width:1040px;margin:0 auto}
+  header{margin-bottom:16px}
+  h1{font-size:22px;font-weight:700}
+  .meta{color:var(--sub);font-size:13px;margin-top:4px}
+  .section{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:16px}
+  .section h2{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section h2::before{content:"";width:4px;height:16px;background:var(--blue);border-radius:2px;display:inline-block}
+  .disc{font-size:12.5px;color:var(--warn);background:#fef6e7;border:1px solid #f5d9a8;border-radius:8px;padding:10px 12px;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--sub);font-weight:600;background:#fafbfc}
+  tr:hover td{background:#fafbff}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;font-weight:600}
+  .t-hy{background:#eef3ff;color:var(--blue)} .t-res{background:#e7f6ee;color:var(--green)} .t-codex{background:#f0f1f3;color:var(--gray)}
+  .t-obs{background:#fff5e6;color:var(--warn)} .t-log{background:#e7f0fb;color:#1d4ed8} .t-pend{background:#fdecea;color:var(--red)}
+  .local{display:inline-block;font-size:10px;padding:1px 5px;border-radius:4px;background:#f0f1f3;color:var(--gray);
+    margin-left:5px;font-weight:600;border:1px solid var(--line)}
+  .box{background:#fafbfc;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-bottom:10px}
+  .box h3{font-size:13px;margin-bottom:6px}
+  .box ol,.box ul{padding-left:20px;font-size:13px}
+  .box li{margin-bottom:5px}
+  code{background:#f0f1f3;padding:1px 5px;border-radius:4px;font-size:12px;word-break:break-all}
+  .judge{border-left:4px solid var(--blue);background:#f5f8ff;padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13px}
+  .ev{font-size:12px;color:var(--sub);margin-top:6px}
+  .pill{font-size:12px;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:#fff;display:inline-block;margin:2px 3px}
+  .pill.block{color:var(--red);border-color:#f3c2bd;background:#fdecea}
+  .pill.wait{color:var(--warn);border-color:#f5d9a8;background:#fef6e7}
+  .pill.ok{color:var(--green);border-color:#bfe6cf;background:#e7f6ee}
+  footer{color:var(--gray);font-size:12px;text-align:center;padding:10px 0 20px}
+  details.ev-box{margin-top:8px;border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
+  details.ev-box>summary{cursor:pointer;padding:8px 12px;font-size:12.5px;color:var(--blue);font-weight:600;list-style:none}
+  details.ev-box>summary::-webkit-details-marker{display:none}
+  details.ev-box>summary::before{content:"▸ ";color:var(--sub)}
+  details.ev-box[open]>summary::before{content:"▾ "}
+  details.ev-box>.body{padding:0 12px 12px;font-size:12px;color:var(--sub);line-height:1.7}
+  details.ev-box .body code{display:inline-block;margin:1px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>DEV-001 阶段汇报（HY）：USB 屏幕与按键最小固件</h1>
+  <div class="meta">汇报人：HY / WorkBuddy ｜ 日期：2026-11-02 ｜ 依据：审查/DEV-001-当前验收.md、交付报告/DEV-001-编译证据/ 及用户实测记录</div>
+</header>
+
+<div class="disc">
+  <b>署名与范围：</b>本文是 HY 的阶段汇报，<b>非 DS 回执、非 Codex 验收结论</b>。证据分三类标注：
+  <span class="tag t-obs">用户观察</span> 来自用户目视/手动操作、无日志佐证的陈述；
+  <span class="tag t-log">日志实测</span> 来自编译/烧写/启动日志与 Codex 采集的按键计数；
+  <span class="tag t-pend">待验证</span> 本次未确认、不得视为通过的项。
+  整体状态为<b>进行中</b>，<b>不得写为验收通过</b>。编译证据位于 <code>交付报告/DEV-001-编译证据/</code><span class="local">仅本地</span>（被 .gitignore 排除），本页以文字引用，不生成公开死链。
+</div>
+
+<div class="section">
+  <h2>一、当前状态总览</h2>
+  <p style="font-size:13px;margin-bottom:8px"><span class="tag t-hy">HY 整理</span> D5 固件已编译、烧写、写入校验通过，屏幕显示经用户目视确认正常；按键有用户观察与日志实测交叉证据；稳定性有 270 秒采样证据。<b>整体仍进行中，10 分钟最终稳定性、RESET、USB 重连、恢复写回尚未验证。</b></p>
+  <div style="margin:6px 0">
+    <span class="pill ok">编译/烧写/校验通过</span>
+    <span class="pill ok">显示目视正常</span>
+    <span class="pill ok">按键计数有交叉证据</span>
+    <span class="pill wait">10 分钟稳定性待核验</span>
+    <span class="pill wait">RESET / USB 重连待验</span>
+    <span class="pill wait">恢复写回待验</span>
+  </div>
+</div>
+
+<div class="section">
+  <h2>二、编译与烧写证据（日志实测）</h2>
+  <div class="box">
+    <h3><span class="tag t-log">日志实测</span> 固定 ESP-IDF v5.3.2 真实构建，退出码 0</h3>
+    <ul>
+      <li>工具链：ESP-IDF <code>v5.3.2</code>，IDF 提交 <code>9d7f2d69f50d1288526d4f1027108e314e8c879f</code>；构建 11/11 步完成，build.log 末行 <code>Project build complete</code>。</li>
+      <li>产物：<code>usb_smoke.bin</code> = <b>267760 字节（0x415f0）</b>，SHA256 <code>8f45eb4b7cbcb793d17d8447f980576bdea25f561b32cf78cc6db3cf24a61d89</code>。</li>
+      <li>引导/分区：bootloader.bin 21664 字节（SHA256 a12d6a9b…）、partition-table.bin 3072 字节（SHA256 5295e8c4…）。</li>
+      <li>审查记录：退出码 0，build.log 无 <code>warning:/error:</code> 匹配；工程副本与工作区交付文件逐文件比对相同（见 <code>源码校验.json</code><span class="local">仅本地</span>）。</li>
+    </ul>
+    <details class="ev-box">
+      <summary>如实记录：build.log 首行 WARNING</summary>
+      <div class="body">
+        build.log 第 1 行为 <code>WARNING: Python interpreter ... is not from installed venv</code>，属 IDF 运行环境的解释器路径提示，<b>非编译错误</b>，构建照常完成；如实保留，不影响"退出码 0 / 构建完成"结论。
+      </div>
+    </details>
+  </div>
+  <div class="box">
+    <h3><span class="tag t-log">日志实测</span> 烧写写入校验通过，启动正常</h3>
+    <ul>
+      <li>esptool v4.12.0，芯片 ESP32-S3（QFN56）rev v0.2，内置 PSRAM 8MB；参数 DIO / 80MHz / 16MB；地址 bootloader 0x0、partition-table 0x8000、usb_smoke 0x10000。</li>
+      <li>写入 267760 字节后 <code>Hash of data verified.</code>（flash.log 末段），退出码 0。</li>
+      <li>启动日志（first-run.log）：<code>BOOT build=dev-001-d5</code>、LCD <code>172x320 RGB565, fb=110080 bytes, SPI 12000000 Hz</code>、<code>BL on 25%</code>、<code>BTN init raw=RELEASED</code>，ALIVE 至 <code>up_s=5</code> 无 FATAL。</li>
+    </ul>
+    <details class="ev-box">
+      <summary>证据文件（均仅本地）</summary>
+      <div class="body">
+        <code>交付报告/DEV-001-编译证据/build.log</code><br>
+        <code>交付报告/DEV-001-编译证据/flash.log</code><br>
+        <code>交付报告/DEV-001-编译证据/first-run.log</code><br>
+        <code>交付报告/DEV-001-编译证据/镜像校验.json</code><br>
+        <code>交付报告/DEV-001-编译证据/源码校验.json</code>
+      </div>
+    </details>
+  </div>
+</div>
+
+<div class="section">
+  <h2>三、用户观察（目视 / 手动）</h2>
+  <div class="box">
+    <h3><span class="tag t-obs">用户观察</span> 显示效果目视确认正常</h3>
+    <ul>
+      <li>文字方向正常、画面边界正常、红绿蓝色块顺序正常。</li>
+      <li>说明：此为<b>用户目视确认</b>，无屏幕像素级自动比对日志佐证的独立硬件检验。</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h3><span class="tag t-obs">用户观察</span> 按键手动操作</h3>
+    <ul>
+      <li><b>5 次短按</b>：均正常（每次计数 +1、屏幕有对应响应）。</li>
+      <li><b>3 次长按</b>：每次各计数一次，松开后状态恢复 <code>IDLE</code>。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>四、按键与计数（用户观察 × 日志实测交叉确认）</h2>
+  <div class="box">
+    <h3><span class="tag t-obs">用户观察</span> + <span class="tag t-log">日志实测</span> 一次独立测试：20 按下 / 20 松开，计数 4 → 23</h3>
+    <ul>
+      <li>Codex 实际采集到另一次测试的 <b>20 次按下、20 次松开</b>，计数从 <b>4 连续到 23</b>。</li>
+      <li>该计数序列与<b>用户屏幕确认一致</b>（用户目视读数与日志序列吻合）。</li>
+      <li>边界：此为用户在一次受控操作中确认，<b>不代表所有边界（连按去抖、长按阈值、暂停后恢复、断电后计数初值）均已覆盖</b>；RESET / USB 重连后的计数与恢复见待验证项。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>五、稳定性采样（日志实测 + 待验证）</h2>
+  <div class="box">
+    <h3><span class="tag t-log">日志实测</span> 截至最后已确认采样 270 秒：无重启、无报错</h3>
+    <ul>
+      <li>稳定性截至最后已确认采样为 <b>270 秒</b>，期间<b>无重启记录、无报错</b>（FATAL / panic 未见）。</li>
+      <li>注：first-run.log 仅到 up_s=5，270 秒为后续稳定性采样；两者均未见异常，但 270 秒采样细节日志未随本汇报提供。</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h3><span class="tag t-pend">待验证</span> 10 分钟（600 秒）最终稳定性结果尚未核验</h3>
+    <ul>
+      <li>拟定验收目标为持续运行 10 分钟无崩溃/无计数错乱；<b>最终结果尚未核验，不能写验收通过</b>。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="section">
+  <h2>六、Codex 审查结论（设计 / 编译层面，来源审查）</h2>
+  <div class="judge">
+    <span class="tag t-codex">Codex 设计</span> 以下为 <code>审查/DEV-001-当前验收.md</code><span class="local">仅本地</span> 记录的当前结论，属设计/编译层面，<b>不等于实机整体验收</b>。
+  </div>
+  <table>
+    <tr><th>项</th><th>当前结论（审查记录）</th><th>性质</th></tr>
+    <tr>
+      <td>D1</td>
+      <td>panel_config 显式 <code>LCD_RGB_DATA_ENDIAN_LITTLE</code>，RGB/BGR 单独控制；主机字节断言通过</td>
+      <td><span class="tag t-codex">Codex 设计</span></td>
+    </tr>
+    <tr>
+      <td>D2</td>
+      <td>LEDC 更新、按键任务创建与首帧信号量释放均检查返回值，失败进入 FATAL；错误处理不递归调用背光设置</td>
+      <td><span class="tag t-codex">Codex 设计</span></td>
+    </tr>
+    <tr>
+      <td>D3</td>
+      <td>文档已区分组件许可，准确说明基础初始化与显示实测边界</td>
+      <td><span class="tag t-codex">Codex 设计</span></td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>七、待验证项清单</h2>
+  <table>
+    <tr><th>编号</th><th>待验证内容</th><th>当前状态</th></tr>
+    <tr><td>V-1</td><td>10 分钟（600s）完整稳定性最终核验</td><td><span class="tag t-pend">待验证</span> 270s 采样通过，10 分钟未核验</td></tr>
+    <tr><td>V-2</td><td>RESET（硬件/软件复位）后启动与计数初值</td><td><span class="tag t-pend">待验证</span></td></tr>
+    <tr><td>V-3</td><td>USB 重连后枚举、控制台与运行恢复</td><td><span class="tag t-pend">待验证</span></td></tr>
+    <tr><td>V-4</td><td>出厂完整备份恢复写回验证</td><td><span class="tag t-pend">待验证</span> 双份备份一致已确认，写回未实测</td></tr>
+    <tr><td>V-5</td><td>按键全边界（连按去抖、长按阈值、暂停恢复、断电初值）</td><td><span class="tag t-pend">待验证</span> 已覆盖 5 短按 / 3 长按 / 20 按下 20 松开</td></tr>
+  </table>
+</div>
+
+<div class="section">
+  <h2>八、范围与证据</h2>
+  <div style="font-size:13px">
+    <p style="margin-bottom:6px"><b>公开（随 dashboard/ 同步）</b>：本页、dashboard/ 看板（index.html）、DS 代码、设计大纲。</p>
+    <p style="margin-bottom:6px"><b>仅本地（不同步）</b>：<code>交付报告/DEV-001-编译证据/*</code><span class="local">仅本地</span>、<code>审查/</code>、<code>research/</code>、<code>交付报告/</code>（含本回执）、台账、AGENTS.md。</p>
+    <p style="color:var(--sub)">编译/烧写/启动日志与镜像 SHA256 均取自 <code>交付报告/DEV-001-编译证据/</code>，按同步约定不进公开仓库；本页仅文字引用，不生成死链。</p>
+  </div>
+</div>
+
+<footer>HY / WorkBuddy · DEV-001 阶段汇报 · 生成时间固定 2026-11-02 · 依据 审查/DEV-001-当前验收.md 与编译证据</footer>
+</body>
+</html>
