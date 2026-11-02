@@ -157,7 +157,7 @@ var GENERATED = "2026-10-22 13:30 CST";
 
 // ===== HY 嵌入快照数据 =====
 var DATA = {
-  snapshot: "2026-11-02 23:15",
+  snapshot: "2026-11-02 23:30",
   phase: "协作框架建立 / 总体设计草案",
   next: "验证当前会话的真实待确认状态及其有效期（下一阶段关键）；Codex 与用户确定首版会话入口（是否采用连接程序管理的专用工作会话），随后制定真实集成与电脑语音闭环设计；Kimi 处理 RES-001 的 K2-01–03。",
   blockers: [
@@ -169,15 +169,15 @@ var DATA = {
   waiting: "用户确认首版会话入口；Kimi 修订 RES-001（K2-01–03）；当前会话真实待确认状态及其有效期的验证",
   latest: "INT-001：R01、R02 本地模拟已由 Codex 验收（主套件 74 PASS / 0 FAIL / 2 UNVERIFIED；专项复现 6 PASS / 0 FAIL），DS 交付 server/codex-probe 与 tests/codex-probe；Codex 复验 RES-001 结论为需返工（K2-01–03 交 Kimi）；主板已下单（微雪 ESP32-S3-LCD-1.47B-M），到货情况待确认；语音唤醒、播放中语音打断、主动播报由用户后续决定；HY 交付 VIS-002 阶段汇报与 VIS-001 的 V01–V05 修订；HY 按 VIS-003 交付《VIS-003 阶段汇报》（以电脑接入阶段成果为主体，树莓派降为后续候选，音频改「轮流听说、AEC 待评估」，未将双麦/XMOS/断电开关列为已批准约束；旧树莓派专题页已删除）；VIS-003 阶段汇报已于 2026-10-22 通过 Codex 验收（整包含汇报页、回执与重渲截图）；HY 已交付 DEV-001 阶段汇报（dashboard/DEV-001-阶段汇报.html），区分用户观察/日志实测/待验证，整体仍进行中。",
   git: [
-    {k:"本地 HEAD", v:"010a092", d:"2026-10-22 同步提交（be4a551..010a092），含 DS 代码、dashboard/（含 VIS-003 阶段汇报与重渲截图）、项目设计大纲.md、.gitignore"},
-    {k:"远程引用 origin/main（普通文本，非链接）", v:"010a092", d:"推送后 fetch 核对：origin/main = 本地 HEAD = 010a092（已校验一致）"},
-    {k:"同步规则", v:"用户明确说“同步”后执行", d:"已按用户指令同步三次（最新 2026-10-22 14:34）；本页 Git 区块刷新后产生新的未提交改动，等待新的同步授权"},
+    {k:"本地 HEAD", v:"d297ee0", d:"2026-11-02 同步提交（010a092..d297ee0），含 dashboard/DEV-001 阶段汇报与截图、firmware/usb-smoke 固件源码、项目设计大纲.md"},
+    {k:"远程引用 origin/main（普通文本，非链接）", v:"d297ee0", d:"推送后 fetch 核对：origin/main = 本地 HEAD = d297ee0（已校验一致）"},
+    {k:"同步规则", v:"用户明确说“同步”后执行", d:"已按用户指令同步四次（最新 2026-11-02 23:30）；本页 Git 区块已随本次同步更新"},
     {k:"公开仓库", v:"github.com/GAS0LUTE/esp32-try", d:"仅白名单内容；协作内容与个人资料已排除"}
   ],
   tasks: [
     {id:"GOV-001",name:"建立规则、大纲、台账",owner:"Codex",status:"待审查",dep:"文件已创建；待用户审阅整体设计",art:"AGENTS.md · 项目设计大纲.md · 任务与验收台账.md",upd:"2026-10-19"},
     {id:"RES-001",name:"调研成熟 ESP32 AI 硬件案例",owner:"Kimi / WorkBuddy",status:"需返工",dep:"v2 与补充核查已复验；处理 K2-01–03",art:"research/案例对比.md · research/推荐路线.md · research/计划预审-AppServer核对-K3-2026-10-19.md",ev:"交付报告/Kimi-回执-K3-2026-10-19.md · 审查/成果复验-2026-10-19.md",upd:"2026-10-19"},
-    {id:"GIT-001",name:"初始化本地 Git 与首次基线提交",owner:"HY / WorkBuddy",status:"待审查",dep:"仓库已建立；已提供本地/远程核对证据",art:".gitignore · 本仓库",ev:"本地 HEAD 010a092 = 远程 origin/main 010a092（推送后 fetch 核对一致）",upd:"2026-10-22"},
+    {id:"GIT-001",name:"初始化本地 Git 与首次基线提交",owner:"HY / WorkBuddy",status:"待审查",dep:"仓库已建立；已提供本地/远程核对证据",art:".gitignore · 本仓库",ev:"本地 HEAD d297ee0 = 远程 origin/main d297ee0（推送后 fetch 核对一致）",upd:"2026-11-02"},
     {id:"VIS-001",name:"建立本地可视化看板",owner:"HY / WorkBuddy",status:"已验收",dep:"已按 V01–V05 与 H01–H05 修订并补交截图；Codex 已验收",art:"dashboard/index.html · dashboard/使用说明.md",ev:"本页 · 交付报告/HY-VIS-002.md · 审查/HY-当前验收.md",upd:"2026-10-22"},
     {id:"VIS-002",name:"本地接入验证阶段汇报",owner:"HY / WorkBuddy",status:"已验收",dep:"已按 H01/H02/H05 修订并补交截图；Codex 已验收",art:"dashboard/INT-001-阶段汇报.html",ev:"交付报告/HY-VIS-002.md · 审查/HY-当前验收.md",upd:"2026-10-22"},
     {id:"DES-001",name:"与用户收敛首版需求",owner:"Codex",status:"进行中",dep:"已确认按键语音与 Codex 交互、查询待确认事项；预算待补充",art:"—",upd:"2026-10-19"},
